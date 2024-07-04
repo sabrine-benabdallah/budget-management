@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login_app/app/modules/Calendrier/views/calendrier_view.dart';
+import 'package:login_app/app/modules/Calendar/views/calendar_view.dart';
 import 'package:login_app/app/modules/home/controllers/home_controller.dart';
 import 'package:login_app/app/modules/icon/bindings/icon_binding.dart';
 import 'package:login_app/app/modules/icon/views/icon_view.dart'; // Import from the new location
 
 class HomeView extends StatelessWidget {
+  HomeView({super.key});
+
   final HomeController controller = Get.put(HomeController());
 
   @override
@@ -27,7 +29,7 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.calendar_today, color: Colors.white),
             onPressed: () {
-              Get.to(CalendrierView());
+              Get.to(const CalendarView());
             },
           ),
         ],

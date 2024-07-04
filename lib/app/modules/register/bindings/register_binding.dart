@@ -4,8 +4,8 @@ import 'package:login_app/app/modules/register/controllers/register_controller.d
 class RegisterBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<RegistrationController>(
-          () => RegistrationController(),
+    Get.lazyPut<RegisterController>(
+      () => RegisterController(),
     );
   }
 }

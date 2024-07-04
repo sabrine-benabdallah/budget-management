@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login_app/app/modules/home/views/home_view.dart';
 import 'package:login_app/app/modules/login/controllers/login_controller.dart';
-import 'package:login_app/app/modules/register/views/register_view.dart';
 import 'package:login_app/app/routes/app_pages.dart';
 
 class LoginView extends StatelessWidget {
+  LoginView({Key? key}) : super(key: key);
+
   final LoginController controller = Get.find();
   final RxBool _isShowing = false.obs;
   final _formKey = GlobalKey<FormState>();
@@ -55,7 +55,7 @@ class LoginView extends StatelessWidget {
                     const SizedBox(height: 40.0),
                     TextFormField(
                       cursorColor: Colors.white,
-                      controller: controller.emailController,
+                      controller: controller.usernameController,
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (v) {},
                       style: const TextStyle(color: Colors.white),
@@ -78,7 +78,7 @@ class LoginView extends StatelessWidget {
                     Obx(
                           () => TextFormField(
                         cursorColor: Colors.white,
-                        controller: controller.passWordController,
+                        controller: controller.passwordController,
                         keyboardType: TextInputType.text,
                         obscureText: !_isShowing.value,
                         style: const TextStyle(color: Colors.white),
@@ -92,9 +92,7 @@ class LoginView extends StatelessWidget {
                               _isShowing.value = !_isShowing.value;
                             },
                             icon: Icon(
-                              _isShowing.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              _isShowing.value ? Icons.visibility : Icons.visibility_off,
                               color: Colors.white,
                             ),
                           ),
@@ -114,18 +112,21 @@ class LoginView extends StatelessWidget {
                       width: 200.0,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green, // Background color
+                          backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.circular(30.0), // Rounded corners
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                             controller.login(context);
                           }
                         },
-                        child: const Text(
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                            : const Text(
                           'Login',
                           style: TextStyle(color: Colors.white),
                         ),
@@ -141,7 +142,7 @@ class LoginView extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.toNamed(Routes.REGISTER);
+                            Get.toNamed(Routes.register);
                           },
                           child: const Text(
                             'Register Now',

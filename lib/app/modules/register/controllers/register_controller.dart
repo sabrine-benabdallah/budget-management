@@ -5,41 +5,54 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_app/app/modules/home/views/home_view.dart';
 
-class RegistrationController extends GetxController {
-  var emailController = TextEditingController();
-  var passWordController = TextEditingController();
+class RegisterController extends GetxController {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  var message = ''.obs;
-  @override
-  void onInit()async  {
-    // TODO: implement onInit
-    super.onInit();
-   await  register();
+  RxBool isPasswordVisible = false.obs;
+  RxBool isLoading = false.obs;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  RxString message = ''.obs;
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-  Future<void> register() async {
+  Future<void> register(BuildContext context) async {
     try {
+      isLoading.value = true;
       final response = await http.post(
-        Uri.parse('http://localhost:8080/api/register'),
+        Uri.parse('http://10.0.2.2:8080/api/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'username': emailController.text,
-          'password': passWordController.text,
+          'username': usernameController.text,
+          'password': passwordController.text,
         }),
       );
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
 
-      if (response.statusCode == 201) {
+      if (response.statusCode < 400) {
         message.value = 'Registration successful';
         Get.to(() => HomeView());
+        formKey.currentState!.reset();
       } else {
         message.value = 'Registration failed';
       }
     } catch (e) {
-      message.value = 'Failed to connect to the server. Please try again later.';
+      message.value =
+          'Failed to connect to the server. Please try again later.';
+    } finally {
+      isLoading.value = false;
+      FocusScope.of(context).unfocus();
     }
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

@@ -2,72 +2,70 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_app/app/modules/icon/bindings/icon_binding.dart';
 import 'package:login_app/app/modules/icon/views/icon_view.dart';
+
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
+  const ProfileView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: Text('Profile',
+        title: const Text(
+          'Profile',
           style: TextStyle(
-          color: Colors.white,
+            color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white,
         ),
       ),
       body: ListView(
         children: [
           ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Se connecter'),
-            subtitle: Text('Connectez-vous, plus excitant!'),
+            leading: const Icon(Icons.account_circle),
+            title: const Text('Log In'),
+            subtitle: const Text('Log in, more exciting!'),
             onTap: () {
               // Handle tap
             },
           ),
           ListTile(
-            leading: Icon(Icons.star),
-            title: Text('Membre Premium'),
+            leading: const Icon(Icons.star),
+            title: const Text('Member Premium'),
             onTap: () {
               // Handle tap
             },
           ),
           ListTile(
-            leading: Icon(Icons.thumb_up),
-            title: Text('Recommander à des amis'),
+            leading: const Icon(Icons.thumb_up),
+            title: const Text('Recommend to friends'),
             onTap: () {
               // Handle tap
             },
           ),
           ListTile(
-            leading: Icon(Icons.rate_review),
-            title: Text('Noter l\'application'),
-            onTap: () {
-              // Handle tap
-            },
+            leading: const Icon(Icons.rate_review),
+            title: const Text('Rate the application'),
+            onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.block),
-            title: Text('Bloquer les publicités'),
-            onTap: () {
-              // Handle tap
-            },
+            leading: const Icon(Icons.block),
+            title: const Text('Block ads'),
+            onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Réglages'),
-            onTap: () {
-              // Handle tap
-            },
+            leading: const Icon(Icons.settings),
+            title: const Text('Parameter'),
+            onTap: () {},
           ),
         ],
       ),
       bottomNavigationBar: Obx(
-            () => Container(
+        () => Container(
           height: 75,
           color: Colors.black87,
           child: Row(
@@ -75,7 +73,7 @@ class ProfileView extends GetView<ProfileController> {
             children: [
               _buildNavItem(Icons.home, 'Home', 0),
               _buildNavItem(Icons.bar_chart, 'Charts', 1),
-              SizedBox(width: 40),
+              const SizedBox(width: 40),
               _buildNavItem(Icons.report, 'Reports', 2),
               _buildNavItem(Icons.person, 'Profile', 3),
             ],
@@ -84,30 +82,36 @@ class ProfileView extends GetView<ProfileController> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => IconView(), binding: IconBinding()); // Navigate with binding
+          Get.to(() => const IconView(),
+              binding: IconBinding()); // Navigate with binding
         },
-        child: Icon(Icons.add),
         backgroundColor: Colors.yellow,
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index, [VoidCallback? onTap]) {
+  Widget _buildNavItem(IconData icon, String label, int index,
+      [VoidCallback? onTap]) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
           icon: Icon(
             icon,
-            color: controller.selectedIndex.value == index ? Colors.yellow : Colors.white,
+            color: controller.selectedIndex.value == index
+                ? Colors.yellow
+                : Colors.white,
           ),
           onPressed: onTap ?? () => controller.changeIndex(index),
         ),
         Text(
           label,
           style: TextStyle(
-            color: controller.selectedIndex.value == index ? Colors.yellow : Colors.white,
+            color: controller.selectedIndex.value == index
+                ? Colors.yellow
+                : Colors.white,
             fontSize: 12,
           ),
         ),
@@ -115,4 +119,3 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 class IconController extends GetxController {
   RxBool isActive = false.obs;
   List<bool> isSelected = [
@@ -7,22 +8,15 @@ class IconController extends GetxController {
   ].obs;
   var showGridView = true.obs;
 
-
-
   void toggle(index) {
     isSelected[index] = !isSelected[index];
   }
-  void dependenciesButtom (){
-    print('Le bouton a été pressé !');
+
+  void dependenciesButton() {
     showGridView.value = true;
-
   }
-  void revenuButtom (){
-    print('Le bouton a été pressé !');
+
+  void incomeButton() {
     showGridView.value = false;
-
   }
-
-
-
 }
